@@ -1,0 +1,3 @@
+get all conversations 
+filter them into groups and person conversations 
+render them in different components
