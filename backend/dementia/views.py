@@ -3,15 +3,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 # from .authentication import generate_password
 from django.core.mail import send_mail, send_mass_mail
+from django.views.decorators.csrf import csrf_exempt
 import os
 from django.utils import timezone
 from datetime import date
-from .authentication import generate_password
+from .conferencing import generate_meeting_passcode
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
+import eventlet
+import socketio
+
+socket_server = socketio.Server()
+app = socketio.WSGIApp(socket_server, static_files={
+    '/': {'content_type': 'text/html', 'filename': 'index.html'}
+})
 
 from .models import (
     Person, Patient, Therapist, Message, Conversation, TherapySession
@@ -31,14 +39,13 @@ REGISTRATION_OBJECT = {
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register_view(request):
-    print('reached here')
     """
     Generic user registration endpoint.
     """
     serializer = RegistrationSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()  # Creates the new Person
-        return Response( data = {"detail": "Registration successful", "user_id": user.id},status=status.HTTP_201_CREATED )
+        return Response( data=None, status=status.HTTP_201_CREATED )
     return Response(data = None, status=status.HTTP_404_NOT_FOUND)
     # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -50,12 +57,15 @@ def verify_email(receiver):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_view(request):
+    print("reached here", request.data)
     """
     Logs in a user and returns a JWT token.
     """
     serializer = LoginSerializer(data=request.data)
+    print(serializer.is_valid())
     if serializer.is_valid():
         tokens = serializer.save()  # create() returns JWT tokens
+        print(tokens)
         return Response(tokens, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -91,6 +101,7 @@ class TherapySessionViewSet(viewsets.ModelViewSet):
         patient_id = request.data.get('patient_id')
         start_time = request.data.get('start_time')
         end_time = request.data.get('end_time')
+        # generate meeting passcode and room id 
         try:
             patient = Patient.objects.get(pk=patient_id)
         except Patient.DoesNotExist:
@@ -113,11 +124,18 @@ class ConversationViewSet(viewsets.ModelViewSet):
     queryset = Conversation.objects.all()
     serializer_class = ConversationSerializer
 
-    def get_queryset(self):
+    @api_view(["post"], )
+    @permission_classes([AllowAny])
+    @csrf_exempt
+    def on_connection(self):
+        return Response("someone connected", status=status.HTTP_200_OK)
+    
+    def get_queryset(self, request):
         """
         Limit the query to conversations where the current user is the owner.
         """
-        return Conversation.objects.filter(person=self.request.user)
+        conversations = Conversation.objects.all()
+        return [conversation for conversation in conversations if request.user_id in [conversation.person_one, conversation.person_two] ]
 
     @action(detail=True, methods=['post'], url_path='send-message')
     def send_message(self, request, pk=None):

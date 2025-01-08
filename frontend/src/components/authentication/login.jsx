@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { authenticate_user } from "../../actions/actions";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import AuthenticationNavigation from "./authentication_navigation";
 import { GoogleIcon, Github01Icon, LockIcon, UserIcon } from "hugeicons-react";
 import { Button } from "./buttons";
+import { useDispatch } from "react-redux";
 
 export const Requirement = () => {
   return <div className="bg-white p-5 m-5 shadow-[0_8px_24px_rgba(149,157,165,0.2)] rounded">
@@ -31,6 +33,7 @@ const Login = () =>{
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState("")
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [showRequirement, setShowRequirement] = useState(false)
 
 
@@ -46,14 +49,15 @@ const Login = () =>{
         </div>
         <div className="flex p-5">
           <LockIcon size = {50} className="bg-white p-2 mr-[-5px] rounded" />
-          <input className="p-3 w-80 rounded outline-none" placeholder="Password" type="text" onChange={(event) => {setPassword(event.target.value)}} htmlFor="input"/>
+          <input name="password" type = "password" className="p-3 w-80 rounded outline-none" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}} htmlFor="input"/>
         </div>
         <div className="mb-3">
             <Link className="text-sm text-blue-950">Don't remember your password?</Link>
         </div>
         <Button onClick = {()=>{
-          if (validatePassword(password) && validateEmail(email)) {
-            authenticate_user(email, password);
+          if (validatePassword(password)) {
+            const authenticate = authenticate_user({username : email, password: password})
+            authenticate(dispatch)
           } else {
             setShowRequirement(true);
             setTimeout(() => {

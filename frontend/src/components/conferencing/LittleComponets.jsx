@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { TestTube01Icon } from "hugeicons-react";
-
+// import { CallBlocked02Icon, HiMicrophone, HiCamera, HiVolumeUp } from "hugeicons-react";
 
 export const UpcomingSession  = (session) =>{
     return <div className="">
@@ -79,3 +79,20 @@ export const ChatWindow = (messages) =>{
             </div>
 </div>
 }
+
+
+export const Controls = () => {
+    return (
+      <div className="flex items-center space-x-4">
+        <button className="flex items-center rounded-full bg-gray-200 p-2 hover:bg-gray-300">
+          <HiMicrophone />
+        </button>
+        <button className="flex items-center rounded-full bg-gray-200 p-2 hover:bg-gray-300">
+          <HiCamera />
+        </button>
+        <button className="flex items-center rounded-full bg-gray-200 p-2 hover:bg-gray-300">
+          <HiVolumeUp />
+        </button>
+      </div>
+    );
+  };

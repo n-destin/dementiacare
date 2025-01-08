@@ -1,6 +1,7 @@
 import React from "react";
 import { sessionLinks } from "../../constants";
-import { Link, useLocation } from "react-router";
+import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import { UserIcon, RecordIcon, DashboardSpeed01Icon, WorkHistoryIcon, TreatmentIcon, TestTube01Icon, SchoolReportCardIcon, InformationCircleIcon, InformationDiamondIcon} from "hugeicons-react";
 import { Button } from "../authentication/buttons";
 import { CallIcon } from "hugeicons-react";

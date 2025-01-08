@@ -1,9 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ConversationList from "./conversationList";
 import { Search01Icon, Attachment01Icon, Mic02Icon, SmileIcon, Camera01Icon } from "hugeicons-react";
 import { Button } from "../authentication/buttons";
 import { conversations, group_conversations } from "../../constants/convesation";
+import { io } from "socket.io-client";
+// import * as dotenv from "dotenv"
 
+const API_URL = "http://127.0.0.1:8000/api/"
+const SOCKET_URL = "http://localhost:3001"
+
+const socket = io(SOCKET_URL, {
+    auth : {
+        offset : 0
+    }
+})
 const user_id = localStorage.getItem("person_id")
 
 const Message = ({message}) => {
@@ -16,12 +26,6 @@ const Message = ({message}) => {
 }
 
 export const ChatWindow = (messages) =>{
-    const [input, setInput] = useState("")
-    const handleSend = ()=>{
-        if(input.trim() !== " "){
-            //send message
-        }
-    }
     return <div className="h-full w-full bg-white rounded p-3 m-2 relative">
             <div className="">
 
@@ -41,6 +45,16 @@ export const ChatWindow = (messages) =>{
 
 
 const ChatRoom = ()=>{
+    const [messages, setMessages] = useState([])
+    useEffect(()=>{
+        socket.on("connection", (data)=>{
+            
+        })
+        socket.on('chat message', (message, offset) =>{
+            setMessages([...messages, message])
+            socket.auth.offset = offset 
+        })
+    }, [])
     return (
         <div className="flex h-lvh bg-gradient-to-b from-[#bfdbfe] to-white p-6">
             <div className="w-[39%]">

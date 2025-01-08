@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { start } from "repl";
 import { ZegoExpressEngine } from "zego-express-engine-webrtc";
 
 const Conference = ({startcall}) => {
@@ -102,12 +103,14 @@ const Conference = ({startcall}) => {
   useEffect(()=>{
     if(startcall) {
         handleStartCall()
-      }
-  })
+    }else{
+        
+    }
+  }, [startcall])
 
   return (
     <div className="w-full h-5/6 bg-white mt-1 rounded text-black">
-    <div id="local-stream" className="border-gray-300"></div>
+        <div id="local-stream" className="border-gray-300"></div>
     </div>
   );
 };

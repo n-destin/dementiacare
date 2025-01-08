@@ -1,8 +1,9 @@
-import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useEffect } from "react";
 const ROOT_URL = import.meta.env.VITE_API_URL
 const api_key = "?key=destin_niyomufasha"
+
+console.log(ROOT_URL)
 
 
 export const action_types = {
@@ -15,9 +16,11 @@ export const action_types = {
     UPDATE_CONVERSATION_KEY : "UPDATE_CONVERSATION_KEY"
  }
 
- export function authenticate_user(email, password, navigate){
+ export function authenticate_user(credentials, navigate){
     return (dispatch) =>{
-        axios.post(`${ROOT_URL}/authenticate/login`, {email:email, password : password}).then((response)=>{
+        console.log("reachedhere")
+        axios.post(`${ROOT_URL}authenticate/login/`, credentials).then((response)=>{
+            console.log(response)
             if(response){
                 dispatch({
                     type : action_types.AUTHENTICATE_USER
@@ -26,6 +29,7 @@ export const action_types = {
                 navigate("/chatroom")
             }
         }).catch((error)=>{
+            console.log(error)
             dispatch({
                 type : action_types.AUTHENTICATION_ERROR, 
                 payload  : error.response.data
@@ -86,15 +90,15 @@ export function create_conversation(conversation_name){
  }
 
 
- export function create_user(first_name, last_name, email, password, navigate){
+ export function create_user(credentials, navigate){    
     return (dispatch)=>{
-        axios.post(`${ROOT_URL}/authenticate/register`, {email:email, first_name: first_name, last_name:last_name, user_name : email, password : password}).then((response)=>{
+        axios.post(`${ROOT_URL}authenticate/register/`, credentials).then((response)=>{
             if(response){
                 dispatch({
                     type : action_types.AUTHENTICATE_USER
                 })
                 localStorage.setItem("token", response.data.userToken)
-                navigate("/chatroom")
+                navigate("/login")
             }
         }).catch((error)=>{
             dispatch({
