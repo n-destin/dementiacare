@@ -4,7 +4,7 @@ import { Search01Icon, Attachment01Icon, Mic02Icon, SmileIcon, Camera01Icon } fr
 import { Button } from "../authentication/buttons";
 import { conversations, group_conversations } from "../../constants/convesation";
 import { io } from "socket.io-client";
-// import * as dotenv from "dotenv"
+import { useDispatch } from "react-redux";
 
 const API_URL = "http://127.0.0.1:8000/api/"
 const SOCKET_URL = "http://localhost:3001"
@@ -46,6 +46,7 @@ export const ChatWindow = (messages) =>{
 
 const ChatRoom = ()=>{
     const [messages, setMessages] = useState([])
+    const dispatch = useDispatch()
     useEffect(()=>{
         socket.on("connection", (data)=>{
             

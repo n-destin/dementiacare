@@ -61,14 +61,14 @@ function Register() {
           <div className='bg-white rounded justify-items-center p-5 m-4'>
             <h2 className='p-5'>Sign Up</h2>
             <div className='flex'>
-              <input type="text" name="firstname" id="firstname"  placeholder='First Name' className='p-2 m-2 rounded bg-slate-100 outline-none' onChange={handleChange}/>
-              <input type="text" name="lastname" id="lastname"  placeholder='Last Name' className='p-2 m-2 rounded bg-slate-100 outline-none' onChange={handleChange}/>
+              <input type="text" name="firstname" id="firstname"  placeholder='First Name' className='text-sm p-2 w-48 m-2 rounded bg-slate-100 outline-none' onChange={handleChange}/>
+              <input type="text" name="lastname" id="lastname"  placeholder='Last Name' className='text-sm p-2 m-2 w-48 rounded bg-slate-100 outline-none' onChange={handleChange}/>
             </div>
             <div className='flex flex-col gap-4 mt-2'>
-              <input type="text" name='email' placeholder='Email Address' className='p-2 bg-slate-100 w-[25rem] outline-none' onChange={handleChange}/>
-              <input type="password" name='password' placeholder='Password' className='p-2 bg-slate-100 w-[25rem] outline-none' onChange={handleChange}/>
-              <input type="password" name='password2' placeholder='Confirm Password' className='p-2 bg-slate-100 w-[25rem] outline-none' onChange={handleChange}/>
-              <button className= "bg-black w-36 rounded p-3 mt-3 mb-32 text-white" onClick = {(event) =>{handleSubmit(event)}}>Register</button>
+              <input type="text" name='email' placeholder='Email Address' className='text-sm p-2 bg-slate-100 w-[25rem] outline-none rounded' onChange={handleChange}/>
+              <input type="password" name='password' placeholder='Password' className='text-sm p-2 bg-slate-100 w-[25rem] outline-none rounded' onChange={handleChange}/>
+              <input type="password" name='password2' placeholder='Confirm Password' className='text-sm p-2 bg-slate-100 w-[25rem] outline-none rounded' onChange={handleChange}/>
+              <button className= "text-sm bg-black w-36 rounded p-3 mt-3 mb-32 text-white" onClick = {(event) =>{handleSubmit(event)}}>Register</button>
             </div>
           </div>
         </div>

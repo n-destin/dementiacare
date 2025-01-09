@@ -45,18 +45,18 @@ const Login = () =>{
         {/* <Button Icon = {GoogleIcon} button_name = {"Login with google"} color  = {"white"}/> */}
         <div className="flex">
           <UserIcon size = {50} className="bg-white p-2 mr-[-5px] rounded" />
-          <input className="p-3 w-80 rounded outline-none" placeholder = "Email" type="text" onChange={(event)=>{setEmail(event.target.value)}} />
+          <input className="p-3 w-80 text-sm rounded outline-none" placeholder = "Email" type="text" onChange={(event)=>{setEmail(event.target.value)}} />
         </div>
         <div className="flex p-5">
           <LockIcon size = {50} className="bg-white p-2 mr-[-5px] rounded" />
-          <input name="password" type = "password" className="p-3 w-80 rounded outline-none" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}} htmlFor="input"/>
+          <input name="password" type = "password" className=" text-sm p-3 w-80 rounded outline-none" placeholder="Password" onChange={(event) => {setPassword(event.target.value)}} htmlFor="input"/>
         </div>
         <div className="mb-3">
             <Link className="text-sm text-blue-950">Don't remember your password?</Link>
         </div>
         <Button onClick = {()=>{
           if (validatePassword(password)) {
-            const authenticate = authenticate_user({username : email, password: password})
+            const authenticate = authenticate_user({username : email, password: password}, navigate)
             authenticate(dispatch)
           } else {
             setShowRequirement(true);

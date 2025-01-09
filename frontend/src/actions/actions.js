@@ -1,4 +1,5 @@
 import axios from "axios";
+import { error } from "console";
 import { useEffect } from "react";
 const ROOT_URL = import.meta.env.VITE_API_URL
 const api_key = "?key=destin_niyomufasha"
@@ -13,9 +14,21 @@ export const action_types = {
     UPDATE_CONVERSATION_KEY : "UPDATE_CONVERSATION_KEY"
  }
 
+ export const register_patient = (information, navigate) =>{
+    return (dispatch) =>{
+        axios.post(`${ROOT_URL}registerpatient/`, information).then(response=>{
+            if(response){
+                console.log(response);
+            }
+        }).catch(error =>{
+            console.log(error);
+            
+        })
+    }
+ }
+
  export function authenticate_user(credentials, navigate){
     return (dispatch) =>{
-        console.log("reachedhere")
         axios.post(`${ROOT_URL}authenticate/login/`, credentials).then((response)=>{
             if(response){
                 dispatch({

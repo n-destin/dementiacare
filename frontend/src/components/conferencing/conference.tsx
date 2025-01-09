@@ -71,8 +71,6 @@ const Conference = ({startcall}) => {
                 videoElement.playsInline = true;
                 videoElement.id = `remote-${remoteStreamId}`;
                 videoElement.srcObject = remoteStream;
-
-                // Add Tailwind CSS classes
                 videoElement.className = "rounded w-full h-64 object-cover";
 
                 remoteStreamContainer.appendChild(videoElement);

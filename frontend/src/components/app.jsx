@@ -8,6 +8,7 @@ import Dashboard from "./dashboard/dashboard";
 import Conference from "./conferencing/conference";
 import Protected from "./authentication/protected";
 import { useSelector } from "react-redux";
+import NewPatient from "./dashboard/patients";
 
 const FallBack = () =>{
 
@@ -35,12 +36,7 @@ const FallBack = () =>{
 
 
 function App(props){
-
-    const[isConnected, setisConnected] = useState(false)
-    const[lastMessage, setLastMessage] = useState('');
-
     const isauthenticated = useSelector(store=>{return store.authentication.authenticated})    
-
     return(
         <BrowserRouter>
             <Routes>
@@ -49,6 +45,7 @@ function App(props){
                     <Route path="/chatroom" element = {<ChatRoom />} />
                     <Route path="/dashboard" element = {<Dashboard />} />
                     <Route path="/conference" element = {<Conference />} />
+                    <Route path="/patient" element ={<NewPatient />}/>
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register/>} />
