@@ -45,7 +45,7 @@ def register_view(request):
     serializer = RegistrationSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()  # Creates the new Person
-        return Response( data=None, status=status.HTTP_201_CREATED )
+        return Response(data=None, status=status.HTTP_201_CREATED )
     return Response(data = None, status=status.HTTP_404_NOT_FOUND)
     # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -65,8 +65,7 @@ def login_view(request):
     print(serializer.is_valid())
     if serializer.is_valid():
         tokens = serializer.save()  # create() returns JWT tokens
-        print(tokens)
-        return Response(tokens, status=status.HTTP_200_OK)
+        return Response(data = tokens, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class TherapySessionViewSet(viewsets.ModelViewSet):

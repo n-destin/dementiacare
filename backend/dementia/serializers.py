@@ -1,5 +1,6 @@
 # myapp/serializers.py
 from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -43,8 +44,8 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, attrs):
         username = attrs.get('username')
         password = attrs.get('password')
-        user = authenticate(username=username, password=password)
-        if not user:
+        user = Person.objects.get(username = username)
+        if not user.check_password(password):
             raise serializers.ValidationError("Invalid credentials")
         attrs['user'] = user
         return attrs

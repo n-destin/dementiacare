@@ -3,9 +3,6 @@ import { useEffect } from "react";
 const ROOT_URL = import.meta.env.VITE_API_URL
 const api_key = "?key=destin_niyomufasha"
 
-console.log(ROOT_URL)
-
-
 export const action_types = {
     AUTHENTICATE_USER : "AUTHENTICATE_USER",
     DE_AUTHENTICATE_USER : "DE_AUTHENTICATE_USER",
@@ -20,19 +17,18 @@ export const action_types = {
     return (dispatch) =>{
         console.log("reachedhere")
         axios.post(`${ROOT_URL}authenticate/login/`, credentials).then((response)=>{
-            console.log(response)
             if(response){
                 dispatch({
-                    type : action_types.AUTHENTICATE_USER
+                    type : action_types.AUTHENTICATE_USER, 
+                    payload : {userid : response.data.user_id, username : response.data.username}
                 })
-                localStorage.setItem("token", response.data.userToken)
+                localStorage.setItem("token", response.data.refresh)
                 navigate("/chatroom")
             }
         }).catch((error)=>{
-            console.log(error)
             dispatch({
                 type : action_types.AUTHENTICATION_ERROR, 
-                payload  : error.response.data
+                payload  : error.response
             })
         })
     }

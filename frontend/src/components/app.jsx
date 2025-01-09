@@ -6,6 +6,8 @@ import Register from "./authentication/signup";
 import ChatRoom from "./chat/chatroom";
 import Dashboard from "./dashboard/dashboard";
 import Conference from "./conferencing/conference";
+import Protected from "./authentication/protected";
+import { useSelector } from "react-redux";
 
 const FallBack = () =>{
 
@@ -16,14 +18,6 @@ const FallBack = () =>{
     useEffect(()=>{
         setLoading(false)
     }, [])
-
-    // useEffect(() => {
-    //     const unsubscribe = auth.onAuthStateChanged((user) => {
-    //         setIsAuthenticated(!!user);
-    //         setLoading(false);
-    //     });
-    //     return () => unsubscribe();
-    // }, []);
 
     if(!isAuthenticated){
         navigate('/login')
@@ -45,15 +39,19 @@ function App(props){
     const[isConnected, setisConnected] = useState(false)
     const[lastMessage, setLastMessage] = useState('');
 
+    const isauthenticated = useSelector(store=>{return store.authentication.authenticated})    
+
     return(
         <BrowserRouter>
             <Routes>
+                <Route element = {<Protected isauthenticated = {isauthenticated} path = "/login"  />}>
+                    <Route path="/session" element={<Session />} />
+                    <Route path="/chatroom" element = {<ChatRoom />} />
+                    <Route path="/dashboard" element = {<Dashboard />} />
+                    <Route path="/conference" element = {<Conference />} />
+                </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register/>} />
-                <Route path="/session" element={<Session />} />
-                <Route path="/chatroom" element = {<ChatRoom />} />
-                <Route path="/dashboard" element = {<Dashboard />} />
-                <Route path="/conference" element = {<Conference />} />
             </Routes>
         </BrowserRouter>
 

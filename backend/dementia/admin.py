@@ -1,6 +1,6 @@
 from django.contrib import admin
+from .models import Person
 
-# Register your models here.
-
+@admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email') 
+    list_display = ['username', 'first_name', "last_name", "password"]
