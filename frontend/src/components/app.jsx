@@ -9,6 +9,7 @@ import Conference from "./conferencing/conference";
 import Protected from "./authentication/protected";
 import { useSelector } from "react-redux";
 import NewPatient from "./dashboard/patients";
+import Patients from "./dashboard/patients";
 
 const FallBack = () =>{
 
@@ -45,7 +46,7 @@ function App(props){
                     <Route path="/chatroom" element = {<ChatRoom />} />
                     <Route path="/dashboard" element = {<Dashboard />} />
                     <Route path="/conference" element = {<Conference />} />
-                    <Route path="/patient" element ={<NewPatient />}/>
+                    <Route path="/patients" element ={<Patients />}/>
                 </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register/>} />

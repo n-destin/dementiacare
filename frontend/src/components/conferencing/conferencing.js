@@ -1,6 +1,6 @@
 const appId = 258335370;
 const serverSecret = "652af4182bcf8a97b00a5edc9bb6467f";
-const token = "04AAAAAGd8Q0oADIhiP3eiaMTlFdieOwCt8qUsptcDNQFeEDu4dvekLHdVoew5ZfhqSn9PdzDHaJrwaknHSv62Yu1cxXDaMEBhVCtlE/r/ectqvrIktHb+E/SOqjrJk/ZSwFwL9u466mOLLgZgHOxNHxe4xHe7+V/LGfJvw7FzWNihuje892+7bT8/s6dgJqLE+CCAOuMyIslMvMK4XlSc6pN+MsCqhJKZhzNk97Z9MiVykq8PkANfKP+ryk9A81CShRj5w2wB"
+const token = "04AAAAAGeByBEADKOx+xJJzBI4v59TbgCvvjNWXVGmAJz5IpvnjHoseDMIj4Liw7cfJO4eT1aYy10Z0nta3dIGFpcggv1nI4CilGqMbKZoaP+4E2K+BNN+ZeNtbdgIygq2+kU0m3cWRR5Px7u5AI5OxmKSWpHdDS5Slxe21ZGWpea0sKxgeQzFxH3AcRCayu8wkIpA914iAt6xyswux2NzXccOV3fd5gWLP5yf1NLzMv01jfbTIyw6fLr3/d65UkBEfvhFrUuNhAE="
 const roomId = "roomTwo";
 const username = "username";
 const userId = "123";
@@ -87,5 +87,6 @@ const initializeCall = async () => {
 };
 
 export const handleStartCall = () => {
+  console.log("reached here")
   initializeCall();
 };

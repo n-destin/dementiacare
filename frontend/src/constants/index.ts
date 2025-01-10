@@ -164,3 +164,11 @@ export const patientInfoFields = [
     { label: "Email", name: "email", type: "email" },
     { label: "Comments", name: "comments", type: "textarea" },
   ];
+
+  export const patients_navigation = [
+    {name : "Search: ", type : "text", classname : "text-sm px-2 py-1 border outline-none rounded"}, 
+    {name : "Assigned To: ", type : "select", options : ["--Select--", "Therapist one", "Therapist two"], classname : "text-sm px-2 py-1 border outline-none rounded w-[16rem]"}, 
+    {name : "Filter: ", type : "select", options : ["--Select--", "Active", "Inactive", "Need Information Entered", "Nedd appointment in next week"], classname : "text-sm px-2 py-1 border outline-none rounded w-[20rem]"}] 
+  
+  
+  export const patients_table = ["Patient name", "Date of Birth", "Phone number", "Last appointmnet", "Upcoming appointment", "Clinians",]

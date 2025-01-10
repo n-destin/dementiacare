@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import SideBar from "../conferencing/sidebar";
 import { dashboardLinks } from "../../constants";
+import Patients from "./patients";
+import { handleStartCall } from "../conferencing/conferencing";
 
 const DashboardNav = () =>{
     return <div className="bg-white w-full border-b">
@@ -9,10 +11,13 @@ const DashboardNav = () =>{
 }
 
 const Dashboard = ()=>{
-    const [current, setCurrent] = useState()
-    return <div className="h-lvh flex flex-col text-white bg-[#bfdbfe]">
+    const [current, setCurrent] = useState("patients")
+    return <div className="h-lvh flex flex-col bg-[#bfdbfe]">
         <DashboardNav />
-        <SideBar classname = "w-[12rem] h-lvh bg-white text-black" sessions={false} links = {dashboardLinks} />
+        <div className="flex h-lvh">
+            <SideBar classname = "w-[12rem] bg-white text-black" sessions={false} links = {dashboardLinks} callFunction={handleStartCall} />
+            {current === "patients" && <Patients />}
+        </div>
     </div>
 }
 

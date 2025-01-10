@@ -1,5 +1,4 @@
 import axios from "axios";
-import { error } from "console";
 import { useEffect } from "react";
 const ROOT_URL = import.meta.env.VITE_API_URL
 const api_key = "?key=destin_niyomufasha"

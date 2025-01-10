@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { sessionLinks } from "../../constants";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { UserIcon, RecordIcon, DashboardSpeed01Icon, WorkHistoryIcon, TreatmentIcon, TestTube01Icon, SchoolReportCardIcon, InformationCircleIcon, InformationDiamondIcon} from "hugeicons-react";
 import { Button } from "../authentication/buttons";
 import { CallIcon } from "hugeicons-react";
 
-const SideBar = ({person, links, classname, sessions, callFunction,calling}) =>{
+const SideBar = ({person, links, classname, sessions, callFunction, calling}) =>{
     const location = useLocation()
     const pathname = location.pathname;
-    
+    const [current, setCurrent ] = useState("schedule")    
    return (<section className={classname} >
         <div >
             {person && 
@@ -33,7 +33,7 @@ const SideBar = ({person, links, classname, sessions, callFunction,calling}) =>{
             </div> }
             {links.map((link) =>{
                 const isActive = pathname === link || pathname.startsWith(link)
-                return <Link to = {link.route} className = 'flex mt-4 ml-4 items-center rounded-lg justify-start hover:text-blue-400'>
+                return <Link onClick={()=>{setCurrent(link)}} to = {undefined} className = 'flex mt-4 ml-4 items-center rounded-lg justify-start hover:text-blue-400'>
                     {sessions ? link === "Demographics"? <InformationDiamondIcon /> : link === "Medical History" ? <WorkHistoryIcon /> : link === "Appointments"? <PreviousIcon /> : link === "Lab Test Reports" ? <TestTube01Icon /> : link === "Treatment Care Plan" ? <TreatmentIcon /> : <SchoolReportCardIcon /> : ""}
                     <p className="text-sm m-2 font-semibold max-lg:hidden">
                         {link}
