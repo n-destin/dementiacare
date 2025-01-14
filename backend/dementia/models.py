@@ -146,6 +146,7 @@ class TherapySession(models.Model):
 class Conversation(models.Model):
     person_one = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='conversations')
     person_one = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='conversations')
+    people = models.ManyToManyField(Person, blank=True)
     creation_date = models.DateField(default=timezone.now)
     messages = models.ManyToManyField(Message, blank=True)
 

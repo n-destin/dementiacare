@@ -4,7 +4,7 @@ import { Search01Icon, Attachment01Icon, Mic02Icon, SmileIcon, Camera01Icon } fr
 import { Button } from "../authentication/buttons";
 import { conversations, group_conversations } from "../../constants/convesation";
 import { io } from "socket.io-client";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const API_URL = "http://127.0.0.1:8000/api/"
 const SOCKET_URL = "http://localhost:3001"
@@ -45,9 +45,17 @@ export const ChatWindow = (messages) =>{
 
 
 const ChatRoom = ()=>{
-    const [messages, setMessages] = useState([])
-    const dispatch = useDispatch()
+    // get messages
+    const conversations = useSelector(store => {return store.conversation.conversations})
+    let group_conversations = []
+    let people_conversations = []
+
+    for(const conversation of conversations){
+        conversation.person_one == undefined && conversation.person_two == undefined ? group_conversations.push(conversation) : people_conversations.push(conversation)
+    }
+
     useEffect(()=>{
+
         socket.on("connection", (data)=>{
             
         })
@@ -56,6 +64,7 @@ const ChatRoom = ()=>{
             socket.auth.offset = offset 
         })
     }, [])
+
     return (
         <div className="flex h-lvh bg-gradient-to-b from-[#bfdbfe] to-white p-6">
             <div className="w-[39%]">
@@ -67,7 +76,7 @@ const ChatRoom = ()=>{
 
                     <div>
                         <ConversationList type = "people"
-                        conversations = {conversations}
+                        conversations = {people_conversations}
                         onSelect={undefined}
                         onNew={()=>{setShowNewConversation(true)}}/>
                     </div>

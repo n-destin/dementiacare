@@ -15,13 +15,16 @@ export const action_types = {
 
  export const register_patient = (information, navigate) =>{
     return (dispatch) =>{
-        axios.post(`${ROOT_URL}registerpatient/`, information).then(response=>{
+        axios.post(`${ROOT_URL}register/patient`, information).then(response=>{
             if(response){
-                console.log(response);
+                console.log(response.data)
             }
         }).catch(error =>{
-            console.log(error);
-            
+            console.log(error)
+            // dispatch({
+            //     type : action_types.DE_AUTHENTICATE_USER, 
+            //     payload : response.data.error
+            // })
         })
     }
  }
@@ -57,7 +60,7 @@ export const action_types = {
  }
 
 
- export function getConversations(){
+ export function get_conversations(){
     return (dispatch)=>{
         axios.get(`${ROOT_URL}/conversation/all`, {headers : {"Authorization" : `Token ${localStorage.getItem('token')}`}}).then((response)=>{
             dispatch({
@@ -68,11 +71,30 @@ export const action_types = {
     }
  }
 
-export function updateConversationKey(conversationKey){
+export function update_conversation_key(conversationKey){
     return (dispatch)=>{
         dispatch({
             type : action_types.UPDATE_CONVERSATION_KEY,
             payload : conversationKey
+        })
+    }
+}
+
+export const create_something = (endpoint, payload, authorization, redux_action, functions)=>{
+    return (dispatch)=>{
+        axios.post(`${ROOT_URL}${endpoint}`, payload, authorization).then((response) =>{
+            if (response){
+                dispatch({
+                    type : action_types[redux_action], 
+                    payload : response.data
+                })
+                functions(dispatch, response);   
+            }
+        }).catch(error=>{
+            dispatch({
+                type : action_types.DE_AUTHENTICATE_USER,
+                payload : error.response.data
+            })
         })
     }
 }
@@ -102,6 +124,7 @@ export function create_conversation(conversation_name){
     return (dispatch)=>{
         axios.post(`${ROOT_URL}authenticate/register/`, credentials).then((response)=>{
             if(response){
+                // get conversations and partients and 
                 dispatch({
                     type : action_types.AUTHENTICATE_USER
                 })
@@ -116,7 +139,6 @@ export function create_conversation(conversation_name){
         })
     }
  }
-
 
 
 

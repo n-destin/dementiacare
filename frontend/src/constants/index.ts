@@ -38,14 +38,14 @@ export const patientInfoFields = [
     { name: 'city', label: 'City/State', type: 'text' },
   ];
   
-  export const contactFields = [
-    { name: 'timeZone', label: 'Time Zone', type: 'select', options: ['Not Set (Use practice time zone)', 'Eastern', 'Central', 'Mountain', 'Pacific'] },
-    { name: 'mobilePhone', label: 'Mobile Phone', type: 'text', placeholder: 'No messages' },
-    { name: 'homePhone', label: 'Home Phone', type: 'text', placeholder: 'No messages' },
-    { name: 'workPhone', label: 'Work Phone', type: 'text', placeholder: 'No messages' },
-    { name: 'otherPhone', label: 'Other Phone', type: 'text', placeholder: 'No messages' },
-    { name: 'email', label: 'Email', type: 'email' },
-  ];
+  // export const contactFields = [
+  //   { name: 'timeZone', label: 'Time Zone', type: 'select', options: ['Not Set (Use practice time zone)', 'Eastern', 'Central', 'Mountain', 'Pacific'] },
+  //   { name: 'mobilePhone', label: 'Mobile Phone', type: 'text', placeholder: 'No messages' },
+  //   { name: 'homePhone', label: 'Home Phone', type: 'text', placeholder: 'No messages' },
+  //   { name: 'workPhone', label: 'Work Phone', type: 'text', placeholder: 'No messages' },
+  //   { name: 'otherPhone', label: 'Other Phone', type: 'text', placeholder: 'No messages' },
+  //   { name: 'email', label: 'Email', type: 'email' },
+  // ];
   
   export const demographicFields = [
     {
@@ -133,42 +133,322 @@ export const patientInfoFields = [
       ],
     },
   ];
+  
 
-  export const formFields = [
-    { section: "contactName", label: "First Name", name: "first", type: "text" },
-    { section: "contactName", label: "Middle Name", name: "middle", type: "text" },
-    { section: "contactName", label: "Last Name", name: "last", type: "text" },
-    { section: "contactName", label: "Suffix", name: "suffix", type: "text" },
-    { label: "Title", name: "title", type: "text" },
-    { label: "Company", name: "company", type: "text" },
-    {
-      label: "Contact Type",
-      name: "contactType",
-      type: "select",
-      options: ["PCP", "Emergency Contact", "Guardian", "Responsible Party for Billing"],
+
+  export const patientRegistrationForm = {
+    "Legal Name": {
+      inputs: [
+        { type: "text", placeholder: "First", width: 10 },
+        { type: "text", placeholder: "Last", width: 6 },
+      ]
     },
-    { label: "Relationship", name: "relationship", type: "text" },
-    { label: "Release of Info (Signed On)", name: "signedOn", type: "date" },
-    { label: "Date of Birth", name: "dateOfBirth", type: "date" },
-    { section: "address", label: "Address 1", name: "address1", type: "text" },
-    { section: "address", label: "Address 2", name: "address2", type: "text" },
-    { section: "address", label: "Country", name: "country", type: "text" },
-    { section: "address", label: "Zip", name: "zip", type: "text" },
-    { section: "address", label: "City", name: "city", type: "text" },
-    { section: "address", label: "State", name: "state", type: "text" },
-    { label: "Time Zone", name: "timeZone", type: "text" },
-    { section: "phoneNumbers", label: "Mobile Phone", name: "mobile", type: "text" },
-    { section: "phoneNumbers", label: "Home Phone", name: "home", type: "text" },
-    { section: "phoneNumbers", label: "Work Phone", name: "work", type: "text" },
-    { section: "phoneNumbers", label: "Fax", name: "fax", type: "text" },
-    { label: "Email", name: "email", type: "email" },
-    { label: "Comments", name: "comments", type: "textarea" },
-  ];
+    "Preferred Name": {
+      inputs: [
+        { type: "text", placeholder: "Optional", width: 10 }
+      ]
+    },
+    "Pronouns": {
+      inputs: [
+        { type: "text", placeholder: "", width: 10 }
+      ]
+    },
+    "Date of Birth": {
+      inputs: [
+        { type: "date", placeholder: "m/d/yyyy", width: 12 }
+      ]
+    },
+    "Address 1": {
+      inputs: [
+        { type: "text", placeholder: "Address 1", width: 25 }
+      ]
+    },
+    "Address 2": {
+      inputs: [
+        { type: "text", placeholder: "Address 2", width: 25 }
+      ]
+    },
+    "Zip": {
+      inputs: [
+        { type: "text", placeholder: "zip code", width: 10 }
+      ]
+    },
+    "City/State": {
+      inputs: [
+        { type: "text", placeholder: "city/state", width: 20 }
+      ]
+    },
+    "Time Zone": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Time Zone --",
+            "Not Set (Use practice time zone)",
+            "UTC−12:00", 
+            "UTC−11:00", 
+            "UTC−10:00" 
+            /* ... more time zones ... */
+          ], 
+          width: 20 
+        }
+      ]
+    },
+    "Mobile Phone": {
+      inputs: [
+        { type: "tel",  width: 15 }, 
+        { 
+          type: "select", 
+          options: [
+            "-- Select Message Preference --",
+            "Voice messages OK", 
+            "Text messages OK", 
+            "Voice/Text messages OK"
+          ]
+        }
+      ]
+    },
+    "Home Phone": {
+      inputs: [
+        { type: "tel",  width: 15 },
+        { 
+          type: "select",
+          options: [
+            "-- Select Message Preference --",
+            "Voice messages OK", 
+            "Text messages OK", 
+            "Voice/Text messages OK"
+          ]
+        }
+      ]
+    },
+    "Work Phone": {
+      inputs: [
+        { type: "tel",  width: 15 },
+        { 
+          type: "select",
+          options: [
+            "-- Select Message Preference --",
+            "Voice messages OK", 
+            "Text messages OK", 
+            "Voice/Text messages OK"
+          ]
+        }
+      ]
+    },
+    "Other Phone": {
+      inputs: [
+        { type: "tel",  width: 15 },
+        { 
+          type: "select",
+          options: [
+            "-- Select Message Preference --",
+            "Voice messages OK", 
+            "Text messages OK", 
+            "Voice/Text messages OK"
+          ]
+        }
+      ]
+    },
+    "Email": {
+      inputs: [
+        { type: "email", placeholder: "", width: 25 }
+      ]
+    },
+    "Administrative Sex": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Administrative Sex --",
+            "Male", 
+            "Female", 
+            "Unknown"
+          ], 
+          width: 15 
+        }
+      ]
+    },
+    "Gender Identity": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Gender Identity --",
+            "Male", 
+            "Female", 
+            "Non-binary", 
+            "Other", 
+            "Prefer not to say"
+          ], 
+          width: 20 
+        }
+      ]
+    },
+    "Sexual Orientation": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Sexual Orientation --",
+            "Heterosexual", 
+            "Homosexual", 
+            "Bisexual", 
+            "Other", 
+            "Prefer not to say"
+          ], 
+          width: 20 
+        }
+      ]
+    },
+    "Race": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Race --",
+            "American Indian or Alaska Native",
+            "Asian",
+            "Black or African American",
+            "Native Hawaiian or Other Pacific Islander",
+            "White",
+            "Other"
+          ], 
+          width: 15 
+        }
+      ]
+    },
+    "Ethnicity": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Ethnicity --",
+            "Hispanic or Latino",
+            "Not Hispanic or Latino",
+            "Prefer not to say",
+            "Other"
+          ], 
+          width: 15 
+        }
+      ]
+    },
+    "Languages": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Language --",
+            "English",
+            "Spanish",
+            "French",
+            "Mandarin",
+            "Other"
+          ], 
+          width: 15 
+        }
+      ]
+    },
+    "Marital Status": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Marital Status --",
+            "Single", 
+            "Married", 
+            "Divorced", 
+            "Widowed", 
+            "Domestic Partnership", 
+            "Other"
+          ], 
+          width: 20 
+        }
+      ]
+    },
+    "Employment": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Employment --",
+            "Employed", 
+            "Unemployed", 
+            "Retired", 
+            "Student", 
+            "Other"
+          ], 
+          width: 20 
+        }
+      ]
+    },
+    "Religious Affiliation": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Religious Affiliation --",
+            "Christianity",
+            "Islam",
+            "Hinduism",
+            "Buddhism",
+            "Judaism",
+            "Atheist/Agnostic",
+            "Other"
+          ], 
+          width: 20 
+        }
+      ]
+    },
+    "HIPAA": {
+      inputs: [
+        { 
+          type: "checkbox", 
+          name: "Signed HIPAA NPP on file",
+          additionalInfo: "Warning - Important for your practice",
+          width: "auto"  
+        }
+      ]
+    },
+    "PCP Release": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select PCP Release --",
+            "Not set", 
+            "Signed", 
+            "Pending"
+          ], 
+          additionalInfo: "Warning - Important for your practice",
+          width: 20 
+        }
+      ]
+    },
+    "Smoking Status": {
+      inputs: [
+        { 
+          type: "select", 
+          options: [
+            "-- Select Smoking Status --",
+            "Never smoked", 
+            "Former smoker", 
+            "Current smoker", 
+            "Unknown"
+          ], 
+          width: 20 
+        }
+      ]
+    }
+  };
+  
+  
+  
 
   export const patients_navigation = [
     {name : "Search: ", type : "text", classname : "text-sm px-2 py-1 border outline-none rounded"}, 
-    {name : "Assigned To: ", type : "select", options : ["--Select--", "Therapist one", "Therapist two"], classname : "text-sm px-2 py-1 border outline-none rounded w-[16rem]"}, 
-    {name : "Filter: ", type : "select", options : ["--Select--", "Active", "Inactive", "Need Information Entered", "Nedd appointment in next week"], classname : "text-sm px-2 py-1 border outline-none rounded w-[20rem]"}] 
+    {name : "Assigned To: ", type : "select", options : ["--Select--", "Therapist one", "Therapist two"], classname : "text-sm px-2 py-1 border outline-none rounded w-[16 ]"}, 
+    {name : "Filter: ", type : "select", options : ["--Select--", "Active", "Inactive", "Need Information Entered", "Nedd appointment in next week"], classname : "text-sm px-2 py-1 border outline-none rounded w-[20 ]"}] 
   
   
   export const patients_table = ["Patient name", "Date of Birth", "Phone number", "Last appointmnet", "Upcoming appointment", "Clinians",]
