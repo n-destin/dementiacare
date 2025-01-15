@@ -4,6 +4,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.shortcuts import get_object_or_404
 
 from .models import (
     Person, Therapist, Patient, Relative, Institution, 
@@ -29,9 +30,16 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
+
+        role = self.context.get('role')
+
         validated_data.pop('password2')
         password = validated_data.pop('password')
-        user = Therapist(**validated_data)
+        user = None
+        if role == "patient":
+            user = Patient(**validated_data)
+        else:
+            user = Therapist(**validated_data)
         user.password = make_password(password)
         user.save()
         return user

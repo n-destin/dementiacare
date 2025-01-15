@@ -7,11 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 import os
 from django.utils import timezone
 from datetime import date
-from .conferencing import generate_meeting_passcode
+from .conferencing import generate_password
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authtoken.models import Token
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
 import eventlet
 import socketio
@@ -38,16 +40,36 @@ REGISTRATION_OBJECT = {
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
-def register_view(request):
+def register_view(request, role):
     """
     Generic user registration endpoint.
     """
-    serializer = RegistrationSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()  # Creates the new Person
-        return Response(data=None, status=status.HTTP_201_CREATED )
-    return Response(data = None, status=status.HTTP_404_NOT_FOUND)
-    # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    information = request.data
+    userToken = request.META.get('HTTP_AUTHORIZATION', []).split(' ')[1]
+    try:
+        user = Person.objects.get(id=request.data.get('userid'))
+    except Person.DoesNotExist:
+        return Response(KeyError("Person does not exist"))
+
+    information["username"] = information["Firstname"].lower() + information["Lastname"].lower()
+    if role == "patient":
+        password = generate_password(12)
+        information['password'] = password
+        information["password2"] = password
+        information['email'] = information['Email']
+        information['']
+
+
+    serializer = RegistrationSerializer(data=information, context = {role : role})
+    print(serializer.is_valid(), "reached here", user.id, request.data['userid'])
+
+
+    return Response(data=None, status=200)
+    
+    # if serializer.is_valid():
+    #     serializer.save()  # Creates a new Person
+    #     return Response(data=None, status=status.HTTP_201_CREATED )
+    # return Response(data = None, status=status.HTTP_404_NOT_FOUND)
 
 
 def verify_email(receiver):
@@ -62,7 +84,7 @@ def login_view(request):
     Logs in a user and returns a JWT token.
     """
     serializer = LoginSerializer(data=request.data)
-    print(serializer.is_valid())
+
     if serializer.is_valid():
         tokens = serializer.save()  # create() returns JWT tokens
         return Response(data = tokens, status=status.HTTP_200_OK)
@@ -80,9 +102,7 @@ class TherapySessionViewSet(viewsets.ModelViewSet):
         """
         try:
             session = self.get_object()
-            # You could add logic to mark the session as done, set end_time, etc.
             session.end_time = timezone.now()
-            # uplioad video to aws and save the link to session.video_url
             session.save()
             return Response({"detail": "Session completed"}, status=status.HTTP_200_OK)
         except TherapySession.DoesNotExist:

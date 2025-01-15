@@ -18,7 +18,7 @@ router.register(r'messages', MessageViewSet, basename='message')
 
 urlpatterns = [
     path('chat/messages/', ConversationViewSet.on_connection, name='send_data'),
-    path('authenticate/register/', register_view, name='register'),
+    path('authenticate/register/<str:role>/', register_view, name='register'),
     path('authenticate/login/', login_view, name='login'),
     path("conversations/all", ConversationViewSet.my_conversations, name = "get conversations"),
     path('', include(router.urls)),

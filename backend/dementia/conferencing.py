@@ -4,7 +4,7 @@ import string
 import random
 from rest_framework import viewsets, permissions
 
-def generate_meeting_passcode(length):
+def generate_password(length):
     uppercase_letters = string.ascii_uppercase
     lowercase_letters = string.ascii_lowercase
     digits = string.digits
