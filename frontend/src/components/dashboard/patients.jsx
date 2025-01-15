@@ -9,7 +9,9 @@ export const Input = ({element}) =>{
         return (
             <div className="flex text-sm gap-2" >
                 <label className="mt-1" htmlFor={element.name}>{element.name}</label>
-                    <select placeholder={element.placeholder} className={element.classname} name={element.name} id={element.name}>
+                    <select onChange={(event)=>{
+                        console.log("element changed")
+                        element.handleChangeFunction(element.fieldname, event.target.value)}} placeholder={element.placeholder} className={element.classname} name={element.name} id={element.name}>
                         {element.options.map(option =>{
                             return <option value={option}>{option}</option>
                         })}
@@ -21,6 +23,8 @@ export const Input = ({element}) =>{
         return (
         <div className="flex items-center" style={{ width: element.width }}>
             <input 
+            onChange={(event)=>{
+                element.handleChangeFunction(element.fieldname, event.target.value)}} 
             type="checkbox" 
             className="mr-2"
             />
@@ -33,11 +37,13 @@ export const Input = ({element}) =>{
         </div>
         );
         }
-        {console.log(element.classname)}
+        // {console.log(element.classname)}
     return (
         <div className="flex text-sm gap-2">
             <label className="mt-1" htmlFor={element.name}>{element.name}</label>
-            <input placeholder={element.placeholder} type={element.type} name = {element.name} className={element.classname}/>
+            <input onChange={(event)=>{
+                console.log("input changed")
+                element.handleChangeFunction(element.fieldname, event.target.value)}} placeholder={element.placeholder} type={element.type} name = {element.name} className={element.classname}/>
         </div>
     )
 }

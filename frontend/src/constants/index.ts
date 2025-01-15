@@ -139,8 +139,8 @@ export const patientInfoFields = [
   export const patientRegistrationForm = {
     "Legal Name": {
       inputs: [
-        { type: "text", placeholder: "First", width: 10 },
-        { type: "text", placeholder: "Last", width: 6 },
+        { type: "text", placeholder: "First name", width: 10 },
+        { type: "text", placeholder: "Last name", width: 6 },
       ]
     },
     "Preferred Name": {

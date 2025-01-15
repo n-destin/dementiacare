@@ -37,7 +37,8 @@ export const action_types = {
                     type : action_types.AUTHENTICATE_USER, 
                     payload : {userid : response.data.user_id, username : response.data.username}
                 })
-                localStorage.setItem("token", response.data.refresh)
+                localStorage.setItem("token", response.data.access)
+                localStorage.setItem('user_information', response.data.user_id)
                 navigate("/chatroom")
             }
         }).catch((error)=>{
@@ -80,9 +81,10 @@ export function update_conversation_key(conversationKey){
     }
 }
 
-export const create_something = (endpoint, payload, authorization, redux_action, functions)=>{
+export const create_something = (endpoint, payload, redux_action, functions)=>{
     return (dispatch)=>{
-        axios.post(`${ROOT_URL}${endpoint}`, payload, authorization).then((response) =>{
+        console.log(ROOT_URL, endpoint)
+        axios.post(`${ROOT_URL}${endpoint}`, {...payload, "userid" : localStorage.getItem('user_information')}, {headers : {"Authorization" : `Token ${localStorage.getItem("token")}`}}).then((response) =>{
             if (response){
                 dispatch({
                     type : action_types[redux_action], 
